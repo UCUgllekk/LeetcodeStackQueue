@@ -9,8 +9,7 @@ class FreqStack:
     def push(self, val: int) -> None:
         '''Adds an element to the top of the stack'''
         self.deque.appendleft(val)
-        if not self.freq or self.deque.count() > :
-            
+
     def pop(self) -> int:
         """Removes and returns the most frequent element in the stack"""
         maxi = self.get_max()
