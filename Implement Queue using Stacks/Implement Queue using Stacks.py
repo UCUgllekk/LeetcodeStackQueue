@@ -1,39 +1,80 @@
 '''Queue implementation'''
 class Node:
-    def __init__(self, data, next=None):
+    '''Node'''
+    def __init__(self, data, next = None):
         self.data = data
         self.next = next
+
+    def __str__(self) -> str:
+        return f"Node(data={self.data}, next={self.next})"
+
+class Stack:
+    '''My stack'''
+    def __init__(self):
+        self.head = None
+
+    def push(self, x: int) -> None:
+        '''Adds an element to the top of the stack'''
+        self.head = Node(x, self.head)
+
+    def pop(self) -> int:
+        '''Removes the top element from the stack'''
+        data = self.head.data
+        self.head = self.head.next
+        return data
+
+    def top(self) -> int:
+        '''Returns data of head'''
+        return self.head.data
+
+    def empty(self) -> bool:
+        '''Checks if the stack is empty'''
+        return not self.head
+
+    def __len__(self):
+        count = 0
+        current = self.head
+        while current is not None:
+            count +=1
+            current = current.next
+        return count
+
+    def __str__(self) -> str:
+        return f"{self.head}"
 
 class MyQueue:
     '''my queue'''
     def __init__(self):
-        self.head = None
-        self.tail = None
+        self.head = Stack()
+        self.tail = Stack()
 
     def push(self, x: int) -> None:
         '''add to queue'''
-        if not self.head:
-            self.tail = Node(x)
-            self.head = self.tail
-        else:
-            self.tail.next = Node(x)
-            self.tail = self.tail.next
+        self.head.push(x)
 
     def pop(self) -> int:
         '''Delete from queue'''
-        data = self.head.data
-        if self.head.next:
-            self.head = self.head.next
-        else:
-            self.head = None
-        return data
+        if self.tail.empty():
+            for _ in range(len(self.head)):
+                self.tail.push(self.head.pop())
+        return self.tail.pop()
+
     def peek(self) -> int:
         '''Returns the element at the front of the queue without removing it.'''
-        return self.head.data
+        if not self.tail.empty():
+            return self.tail.top()
+        current = self.head.head
+        while current:
+            if current.next is None:
+                return current.data
+            current = current.next
 
     def empty(self) -> bool:
         '''Checks if the queue is empty'''
-        return not self.head
+        return self.head.empty() and self.tail.empty()
+
+    def __str__(self) -> str:
+        return f"head={self.head}, tail={self.tail}"
 
 if __name__ == '__main__':
     myQueue = MyQueue()

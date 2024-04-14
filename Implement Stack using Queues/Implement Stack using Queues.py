@@ -1,10 +1,9 @@
 '''Stack implementation'''
 class Node:
     '''Node'''
-    def __init__(self, data):
+    def __init__(self, data, next = None):
         self.data = data
-        self.next = None
-
+        self.next = next
 class MyStack:
     '''My stack'''
     def __init__(self):
@@ -12,9 +11,7 @@ class MyStack:
 
     def push(self, x: int) -> None:
         '''Adds an element to the top of the stack'''
-        old_head = self.head
-        self.head = Node(x)
-        self.head.next = old_head
+        self.head = Node(x, self.head)
 
     def pop(self) -> int:
         '''Removes the top element from the stack'''
