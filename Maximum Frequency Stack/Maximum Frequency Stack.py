@@ -4,7 +4,6 @@ class FreqStack:
     '''Frequency stack'''
     def __init__(self):
         self.deque = deque()
-        self.freq = deque()
 
     def push(self, val: int) -> None:
         '''Adds an element to the top of the stack'''
@@ -12,7 +11,7 @@ class FreqStack:
 
     def pop(self) -> int:
         """Removes and returns the most frequent element in the stack"""
-        maxi = self.get_max()
+        maxi = max(self.deque, key= lambda x: self.deque.count(x))
         counter = 0
         for _ in range(len(self.deque)):
             if self.deque[0] == maxi:
@@ -24,18 +23,6 @@ class FreqStack:
 
     def __str__(self) -> str:
         return f"{self.deque}"
-
-    def get_max(self) -> int:
-        maxi = max(self.deque.count(i) for i in self.deque)
-        for i in self.deque:
-            if self.deque.count(i) == maxi:
-                return i
-        # maxi = None
-        # for i in self.deque:
-        #     if maxi is None or self.deque.count(i) > maxi_count:
-        #         maxi = i
-        #         maxi_count = self.deque.count(maxi)
-        # return maxi
 
 if __name__ == '__main__':
     freqStack = FreqStack()
